@@ -6,7 +6,7 @@
  * Please see the LICENSE included with this distribution for details.
  *
  */
-package com.bongole.ga;
+package com.bongole.ti.ga;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
@@ -25,7 +25,7 @@ import com.google.analytics.tracking.android.ServiceManager;
 import com.google.analytics.tracking.android.Tracker;
 
 
-@Kroll.module(name="GoogleAnalyticsAndroid", id="com.bongole.ga")
+@Kroll.module(name="GoogleAnalyticsAndroid", id="com.bongole.ti.ga")
 public class GoogleAnalyticsAndroid extends KrollModule
 {
 

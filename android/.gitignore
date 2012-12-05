@@ -1,0 +1,11 @@
+tmp
+bin
+build
+dist
+*.zip
+.apt_generated
+.DS_Store
+lib
+libs
+*~
+*.swp

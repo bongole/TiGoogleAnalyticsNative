@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 0.1
+apiversion: 2
+description: My module
+author: Your Name
+license: Specify your license
+copyright: Copyright (c) 2012 by Your Company
+
+
+# these should not be edited
+name: iphone
+moduleid: com.bongole.ti.ga
+guid: 54152eb6-1eae-4641-9f74-1a9072510d3e
+platform: iphone
+minsdk: 2.1.4.GA

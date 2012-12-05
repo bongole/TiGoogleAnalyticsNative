@@ -1,0 +1,8 @@
+tmp
+bin
+build
+*.zip
+*~
+*.swp
+Library
+.DS_Store

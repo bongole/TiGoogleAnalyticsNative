@@ -9,6 +9,7 @@
 package com.bongole.ti.ga;
 
 import java.lang.Thread.UncaughtExceptionHandler;
+import java.util.HashMap;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollModule;
@@ -50,19 +51,35 @@ public class GoogleAnalyticsAndroid extends KrollModule
 
 	// Methods
 	@Kroll.method
-	public void start(KrollDict dict)
+	public void start(HashMap o)
 	{
+		KrollDict dict = new KrollDict(o);
+		
 		GoogleAnalytics ga = GoogleAnalytics.getInstance(TiApplication.getInstance().getApplicationContext());
 		
-		ga.setDebug(dict.getBoolean("debug"));
+		if( dict.containsKeyAndNotNull("debug") ){
+			ga.setDebug(dict.getBoolean("debug"));
+		}
 		
-		Integer period = dict.getInt("dispatchInterval");
-		GAServiceManager.getInstance().setDispatchPeriod( period == null ? 20 : period.intValue());
+		Integer period = 20;
+		if( dict.containsKeyAndNotNull("dispatchInterval") ){
+			period = dict.getInt("dispatchInterval");
+		}
+		
+		GAServiceManager.getInstance().setDispatchPeriod( period );
 		
 		Tracker tracker = ga.getTracker(dict.getString("account"));
-		tracker.setAnonymizeIp(dict.getBoolean("anonymizeIp"));
-		Double sampleRate = dict.getDouble("sampleRate");
-		tracker.setSampleRate( sampleRate == null ? 100 : sampleRate.doubleValue());
+		
+		if( dict.containsKeyAndNotNull("anonymizeIp") ){
+			tracker.setAnonymizeIp(dict.getBoolean("anonymizeIp"));
+		}
+		
+		Double sampleRate = 100.0;
+		if( dict.containsKeyAndNotNull("sampleRate") ){
+			dict.getDouble("sampleRate");
+		}
+		tracker.setSampleRate( sampleRate );
+		
 		ga.setDefaultTracker(tracker);
 		
 		UncaughtExceptionHandler myHandler = new ExceptionReporter(
@@ -74,33 +91,80 @@ public class GoogleAnalyticsAndroid extends KrollModule
 	}
 	
 	@Kroll.method
-	public void trackView(KrollDict dict)
+	public void trackView(KrollDict o)
 	{
-		GoogleAnalytics ga = GoogleAnalytics.getInstance(TiApplication.getInstance().getApplicationContext());
-		Tracker tracker = ga.getDefaultTracker();
-		tracker.trackView(dict.getString("viewName"));
-	}
-	
-	@Kroll.method
-	public void trackEvent(KrollDict dict)
-	{
+		KrollDict dict = new KrollDict(o);
 		GoogleAnalytics ga = GoogleAnalytics.getInstance(TiApplication.getInstance().getApplicationContext());
 		Tracker tracker = ga.getDefaultTracker();
 		
-		Integer value = dict.getInt("value");
-		Long l = value == null ? null : new Long(value);
-		tracker.trackEvent(dict.getString("category"), dict.getString("action"), dict.getString("label"), l);
+		String viewName = null;
+		if( dict.containsKeyAndNotNull("viewName") ){
+			viewName = dict.getString("viewName");
+		}
+		
+		tracker.trackView(viewName);
 	}
 	
 	@Kroll.method
-	public void trackTiming(KrollDict dict)
+	public void trackEvent(KrollDict o)
 	{
+		KrollDict dict = new KrollDict(o);
 		GoogleAnalytics ga = GoogleAnalytics.getInstance(TiApplication.getInstance().getApplicationContext());
 		Tracker tracker = ga.getDefaultTracker();
 		
-		Integer value = dict.getInt("value");
-		Long l = value == null ? null : new Long(value);
-		tracker.trackTiming(dict.getString("category"), l, dict.getString("name"), dict.getString("label"));
+		String category = null;
+		String action = null;
+		String label = null;
+		Long value = null;
+		
+		if( dict.containsKeyAndNotNull("category") ){
+			category = dict.getString("category");
+		}
+		
+		if( dict.containsKeyAndNotNull("action")){
+			action = dict.getString("action");
+		}
+		
+		if( dict.containsKeyAndNotNull("label")){
+			label = dict.getString("label");
+		}
+		
+		if( dict.containsKeyAndNotNull("value")){
+			value = dict.getDouble("value").longValue();
+		}
+		
+		tracker.trackEvent(category, action, label, value);
+	}
+	
+	@Kroll.method
+	public void trackTiming(KrollDict o)
+	{
+		KrollDict dict = new KrollDict(o);
+		GoogleAnalytics ga = GoogleAnalytics.getInstance(TiApplication.getInstance().getApplicationContext());
+		Tracker tracker = ga.getDefaultTracker();
+		
+		String category = null;
+		Long value = null;
+		String name = null;
+		String label = null;
+		
+		if( dict.containsKeyAndNotNull("category") ){
+			category = dict.getString("category");
+		}
+		
+		if( dict.containsKeyAndNotNull("name")){
+			name = dict.getString("name");
+		}
+		
+		if( dict.containsKeyAndNotNull("label")){
+			label = dict.getString("label");
+		}
+		
+		if( dict.containsKeyAndNotNull("value")){
+			value = dict.getDouble("value").longValue();
+		}	
+		
+		tracker.trackTiming(category, value, name, label);
 	}
 	
 	@Kroll.method

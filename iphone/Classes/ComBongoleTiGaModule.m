@@ -97,6 +97,7 @@
     ENSURE_SINGLE_ARG(args, NSDictionary);
     ENSURE_ARG_FOR_KEY(account, args, @"account", NSString);
     ENSURE_ARG_OR_NIL_FOR_KEY(dispatchInterval, args, @"dispatchInterval", NSNumber);
+    ENSURE_ARG_OR_NIL_FOR_KEY(debug, args, @"debug", NSNumber);
     ENSURE_ARG_OR_NIL_FOR_KEY(anonymizeIp, args, @"anonymizeIp", NSNumber);
     ENSURE_ARG_OR_NIL_FOR_KEY(sampleRate, args, @"sampleRate", NSNumber);
     

@@ -88,12 +88,14 @@
 {
     NSString *trackingId;
     NSNumber *dispatchInterval;
-    NSNumber *debug;
+    NSNumber *dryRun;
+    NSNumber *verbose;
     
     ENSURE_SINGLE_ARG(args, NSDictionary);
     ENSURE_ARG_FOR_KEY(trackingId, args, @"trackingId", NSString);
     ENSURE_ARG_OR_NIL_FOR_KEY(dispatchInterval, args, @"dispatchInterval", NSNumber);
-    ENSURE_ARG_OR_NIL_FOR_KEY(debug, args, @"debug", NSNumber);
+    ENSURE_ARG_OR_NIL_FOR_KEY(dryRun, args, @"dryRun", NSNumber);
+    ENSURE_ARG_OR_NIL_FOR_KEY(verbose, args, @"verbose", NSNumber);
     
     ENSURE_UI_THREAD_1_ARG(args);
     
@@ -101,8 +103,11 @@
         dispatchInterval = [NSNumber numberWithInt:20];
     }
     
-    if( debug != nil ){
+    if( dryRun != nil && [dryRun boolValue] ){
         [GAI sharedInstance].dryRun = YES;
+    }
+    
+    if( verbose != nil && [verbose boolValue] ){
         [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
     }
     

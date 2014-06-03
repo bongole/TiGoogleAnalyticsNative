@@ -32,8 +32,6 @@
 	// this method is called when the module is first loaded
 	// you *must* call the superclass
 	[super startup];
-	
-	NSLog(@"[INFO] %@ loaded",self);
 }
 
 -(void)shutdown:(id)sender
@@ -88,18 +86,14 @@
 
 -(void)start:(id)args
 {
-    NSString *account;
+    NSString *trackingId;
     NSNumber *dispatchInterval;
     NSNumber *debug;
-    NSNumber *anonymizeIp;
-    NSNumber *sampleRate;
     
     ENSURE_SINGLE_ARG(args, NSDictionary);
-    ENSURE_ARG_FOR_KEY(account, args, @"account", NSString);
+    ENSURE_ARG_FOR_KEY(trackingId, args, @"trackingId", NSString);
     ENSURE_ARG_OR_NIL_FOR_KEY(dispatchInterval, args, @"dispatchInterval", NSNumber);
     ENSURE_ARG_OR_NIL_FOR_KEY(debug, args, @"debug", NSNumber);
-    ENSURE_ARG_OR_NIL_FOR_KEY(anonymizeIp, args, @"anonymizeIp", NSNumber);
-    ENSURE_ARG_OR_NIL_FOR_KEY(sampleRate, args, @"sampleRate", NSNumber);
     
     ENSURE_UI_THREAD_1_ARG(args);
     
@@ -107,54 +101,43 @@
         dispatchInterval = [NSNumber numberWithInt:20];
     }
     
-    if( debug == nil ){
-        debug = [NSNumber numberWithBool:NO];
-    }
-    
-    if( anonymizeIp == nil ){
-        anonymizeIp = [NSNumber numberWithBool:NO];
-    }
-    
-    if( sampleRate == nil ){
-        sampleRate = [NSNumber numberWithInt: 100];
+    if( debug != nil ){
+        [GAI sharedInstance].dryRun = YES;
+        [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
     }
     
     [GAI sharedInstance].trackUncaughtExceptions = YES;
-    [GAI sharedInstance].debug = [debug boolValue];
     [GAI sharedInstance].dispatchInterval = [dispatchInterval intValue];
     
-    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:account];
-    if( tracker != nil ){
-        [tracker setSampleRate:[sampleRate doubleValue]];
-        [tracker setAnonymize:[anonymizeIp boolValue]];
-    }
+    [[GAI sharedInstance] trackerWithTrackingId:trackingId];
 }
 
 -(void)startSession
 {
     ENSURE_UI_THREAD_0_ARGS;
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    tracker.sessionStart = YES;
+    [tracker set:kGAISessionControl value:@"start"];
 }
 
 -(void)stopSession
 {
     ENSURE_UI_THREAD_0_ARGS;
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    tracker.sessionStart = NO;
+    [tracker set:kGAISessionControl value:@"end"];
 }
 
--(void)trackView:(id)args
+-(void)trackScreen:(id)args
 {
-    NSString *viewName;
+    NSString *screenName;
     
     ENSURE_SINGLE_ARG(args, NSDictionary);
-    ENSURE_ARG_OR_NIL_FOR_KEY(viewName, args, @"viewName", NSString);
+    ENSURE_ARG_OR_NIL_FOR_KEY(screenName, args, @"screenName", NSString);
     
     ENSURE_UI_THREAD_1_ARG(args);
     
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker trackView:viewName];
+    [tracker set:kGAIScreenName value:screenName];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 }
 
 -(void)trackEvent:(id)args
@@ -173,25 +156,32 @@
     ENSURE_UI_THREAD_1_ARG(args);
     
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker trackEventWithCategory:category withAction:action withLabel:label withValue:value];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:category
+                                                          action:action
+                                                           label:label
+                                                           value:value] build]];
 }
 
 -(void)trackTiming:(id)args
 {
     NSString *category;
-    NSNumber *value;
+    NSNumber *interval;
     NSString *name;
     NSString *label;
     
     ENSURE_SINGLE_ARG(args, NSDictionary);
     ENSURE_ARG_FOR_KEY(category, args, @"category", NSString);
-    ENSURE_ARG_FOR_KEY(value, args, @"value", NSNumber);
+    ENSURE_ARG_FOR_KEY(interval, args, @"interval", NSNumber);
     ENSURE_ARG_OR_NIL_FOR_KEY(name, args, @"name", NSString);
     ENSURE_ARG_OR_NIL_FOR_KEY(label, args, @"label", NSString);
     
     ENSURE_UI_THREAD_1_ARG(args);
     
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker trackTimingWithCategory:category withValue:[value doubleValue] withName:name withLabel:label];
+    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:category
+                                                        interval:interval
+                                                            name:name
+                                                           label:label] build]];
 }
+
 @end

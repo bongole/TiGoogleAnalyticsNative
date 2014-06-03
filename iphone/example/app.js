@@ -1,39 +1,23 @@
-// This is a test harness for your module
-// You should do something interesting in this harness 
-// to test out the module and to provide instructions 
-// to users on how to use it by example.
+// this sets the background color of the master UIView (when there are no windows/tab groups on it)
+Titanium.UI.setBackgroundColor('#000');
 
+var win = Ti.UI.createWindow();
 
-// open a single window
-var win = Ti.UI.createWindow({
-	backgroundColor:'white'
+var tracker = require('com.bongole.ti.ga');
+tracker.start({trackingId: 'YOUR TRACKING CODE', debug: true});
+
+win.addEventListener('open', function(){
+    tracker.trackScreen({screenName: 'MyScreen'});
 });
-var label = Ti.UI.createLabel();
-win.add(label);
+
+var btn = Ti.UI.createButton({
+    title: 'CLICK'
+});
+
+btn.addEventListener('click', function(){
+    tracker.trackEvent({category: 'mycat', action: 'myaction'});
+});
+
+win.add(btn);
+
 win.open();
-
-// TODO: write your module tests here
-var iphone = require('com.bongole.ti.ga');
-Ti.API.info("module is => " + iphone);
-
-label.text = iphone.example();
-
-Ti.API.info("module exampleProp is => " + iphone.exampleProp);
-iphone.exampleProp = "This is a test value";
-
-if (Ti.Platform.name == "android") {
-	var proxy = iphone.createExample({
-		message: "Creating an example Proxy",
-		backgroundColor: "red",
-		width: 100,
-		height: 100,
-		top: 100,
-		left: 150
-	});
-
-	proxy.printMessage("Hello world!");
-	proxy.message = "Hi world!.  It's me again.";
-	proxy.printMessage("Hello world!");
-	win.add(proxy);
-}
-

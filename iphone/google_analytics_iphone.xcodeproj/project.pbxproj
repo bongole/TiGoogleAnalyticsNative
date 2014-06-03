@@ -22,13 +22,13 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		0039A3FE166F1CCA00DC8766 /* GAI.h in Headers */ = {isa = PBXBuildFile; fileRef = 0039A3F7166F1CCA00DC8766 /* GAI.h */; };
-		0039A3FF166F1CCA00DC8766 /* GAITrackedViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0039A3F8166F1CCA00DC8766 /* GAITrackedViewController.h */; };
-		0039A400166F1CCA00DC8766 /* GAITracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 0039A3F9166F1CCA00DC8766 /* GAITracker.h */; };
-		0039A401166F1CCA00DC8766 /* GAITransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 0039A3FA166F1CCA00DC8766 /* GAITransaction.h */; };
-		0039A402166F1CCA00DC8766 /* GAITransactionItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 0039A3FB166F1CCA00DC8766 /* GAITransactionItem.h */; };
-		0039A403166F1CCA00DC8766 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0039A3FC166F1CCA00DC8766 /* libGoogleAnalytics.a */; };
-		0039A404166F1CCA00DC8766 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0039A3FD166F1CCA00DC8766 /* libGoogleAnalytics_debug.a */; };
+		00F18179193D97960075AA20 /* GAI.h in Headers */ = {isa = PBXBuildFile; fileRef = 00F18172193D97960075AA20 /* GAI.h */; };
+		00F1817A193D97960075AA20 /* GAIDictionaryBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 00F18173193D97960075AA20 /* GAIDictionaryBuilder.h */; };
+		00F1817B193D97960075AA20 /* GAIFields.h in Headers */ = {isa = PBXBuildFile; fileRef = 00F18174193D97960075AA20 /* GAIFields.h */; };
+		00F1817C193D97960075AA20 /* GAILogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 00F18175193D97960075AA20 /* GAILogger.h */; };
+		00F1817D193D97960075AA20 /* GAITrackedViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 00F18176193D97960075AA20 /* GAITrackedViewController.h */; };
+		00F1817E193D97960075AA20 /* GAITracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 00F18177193D97960075AA20 /* GAITracker.h */; };
+		00F1817F193D97960075AA20 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F18178193D97960075AA20 /* libGoogleAnalyticsServices.a */; };
 		24DD6CF91134B3F500162E58 /* ComBongoleTiGaModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 24DD6CF71134B3F500162E58 /* ComBongoleTiGaModule.h */; };
 		24DD6CFA1134B3F500162E58 /* ComBongoleTiGaModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DD6CF81134B3F500162E58 /* ComBongoleTiGaModule.m */; };
 		24DE9E1111C5FE74003F90F6 /* ComBongoleTiGaModuleAssets.h in Headers */ = {isa = PBXBuildFile; fileRef = 24DE9E0F11C5FE74003F90F6 /* ComBongoleTiGaModuleAssets.h */; };
@@ -48,13 +48,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0039A3F7166F1CCA00DC8766 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
-		0039A3F8166F1CCA00DC8766 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
-		0039A3F9166F1CCA00DC8766 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
-		0039A3FA166F1CCA00DC8766 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransaction.h; sourceTree = "<group>"; };
-		0039A3FB166F1CCA00DC8766 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransactionItem.h; sourceTree = "<group>"; };
-		0039A3FC166F1CCA00DC8766 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
-		0039A3FD166F1CCA00DC8766 /* libGoogleAnalytics_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics_debug.a; sourceTree = "<group>"; };
+		00F18172193D97960075AA20 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		00F18173193D97960075AA20 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		00F18174193D97960075AA20 /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
+		00F18175193D97960075AA20 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
+		00F18176193D97960075AA20 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		00F18177193D97960075AA20 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		00F18178193D97960075AA20 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
 		24DD6CF71134B3F500162E58 /* ComBongoleTiGaModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComBongoleTiGaModule.h; path = Classes/ComBongoleTiGaModule.h; sourceTree = "<group>"; };
 		24DD6CF81134B3F500162E58 /* ComBongoleTiGaModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComBongoleTiGaModule.m; path = Classes/ComBongoleTiGaModule.m; sourceTree = "<group>"; };
 		24DD6D1B1134B66800162E58 /* titanium.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = titanium.xcconfig; sourceTree = "<group>"; };
@@ -71,8 +71,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
-				0039A403166F1CCA00DC8766 /* libGoogleAnalytics.a in Frameworks */,
-				0039A404166F1CCA00DC8766 /* libGoogleAnalytics_debug.a in Frameworks */,
+				00F1817F193D97960075AA20 /* libGoogleAnalyticsServices.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,13 +81,13 @@
 		0039A3F6166F1CCA00DC8766 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				0039A3F7166F1CCA00DC8766 /* GAI.h */,
-				0039A3F8166F1CCA00DC8766 /* GAITrackedViewController.h */,
-				0039A3F9166F1CCA00DC8766 /* GAITracker.h */,
-				0039A3FA166F1CCA00DC8766 /* GAITransaction.h */,
-				0039A3FB166F1CCA00DC8766 /* GAITransactionItem.h */,
-				0039A3FC166F1CCA00DC8766 /* libGoogleAnalytics.a */,
-				0039A3FD166F1CCA00DC8766 /* libGoogleAnalytics_debug.a */,
+				00F18172193D97960075AA20 /* GAI.h */,
+				00F18173193D97960075AA20 /* GAIDictionaryBuilder.h */,
+				00F18174193D97960075AA20 /* GAIFields.h */,
+				00F18175193D97960075AA20 /* GAILogger.h */,
+				00F18176193D97960075AA20 /* GAITrackedViewController.h */,
+				00F18177193D97960075AA20 /* GAITracker.h */,
+				00F18178193D97960075AA20 /* libGoogleAnalyticsServices.a */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -148,14 +147,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00F18179193D97960075AA20 /* GAI.h in Headers */,
+				00F1817C193D97960075AA20 /* GAILogger.h in Headers */,
+				00F1817B193D97960075AA20 /* GAIFields.h in Headers */,
 				AA747D9F0F9514B9006C5449 /* ComBongoleTiGa_Prefix.pch in Headers */,
 				24DD6CF91134B3F500162E58 /* ComBongoleTiGaModule.h in Headers */,
+				00F1817E193D97960075AA20 /* GAITracker.h in Headers */,
+				00F1817A193D97960075AA20 /* GAIDictionaryBuilder.h in Headers */,
+				00F1817D193D97960075AA20 /* GAITrackedViewController.h in Headers */,
 				24DE9E1111C5FE74003F90F6 /* ComBongoleTiGaModuleAssets.h in Headers */,
-				0039A3FE166F1CCA00DC8766 /* GAI.h in Headers */,
-				0039A3FF166F1CCA00DC8766 /* GAITrackedViewController.h in Headers */,
-				0039A400166F1CCA00DC8766 /* GAITracker.h in Headers */,
-				0039A401166F1CCA00DC8766 /* GAITransaction.h in Headers */,
-				0039A402166F1CCA00DC8766 /* GAITransactionItem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +184,8 @@
 /* Begin PBXProject section */
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "google_analytics_iphone" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -246,10 +248,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					armv6,
-					armv7,
-				);
+				ARCHS = "$(ARCHS_STANDARD)";
 				"ARCHS[sdk=iphoneos*]" = (
 					armv6,
 					armv7,
@@ -277,6 +276,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Library\"",
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)",
 				);
 				OTHER_CFLAGS = (
 					"-DDEBUG",
@@ -297,10 +297,7 @@
 			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					armv6,
-					armv7,
-				);
+				ARCHS = "$(ARCHS_STANDARD)";
 				"ARCHS[sdk=iphoneos*]" = (
 					armv6,
 					armv7,
@@ -323,10 +320,11 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Library\"",
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)",
 				);
 				OTHER_CFLAGS = "-DTI_POST_1_2";
 				OTHER_LDFLAGS = "-ObjC";

@@ -2,7 +2,7 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 0.1
+version: 0.2
 apiversion: 2
 description: My module
 author: Your Name
@@ -15,4 +15,4 @@ name: iphone
 moduleid: com.bongole.ti.ga
 guid: 54152eb6-1eae-4641-9f74-1a9072510d3e
 platform: iphone
-minsdk: 2.1.4.GA
+minsdk: 3.2.2.GA

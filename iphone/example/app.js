@@ -4,7 +4,7 @@ Titanium.UI.setBackgroundColor('#000');
 var win = Ti.UI.createWindow();
 
 var tracker = require('com.bongole.ti.ga');
-tracker.start({trackingId: 'YOUR TRACKING CODE', debug: true});
+tracker.start({trackingId: 'YOUR TRACKING CODE', dryRun: true, verbose: true});
 
 win.addEventListener('open', function(){
     tracker.trackScreen({screenName: 'MyScreen'});
@@ -15,7 +15,7 @@ var btn = Ti.UI.createButton({
 });
 
 btn.addEventListener('click', function(){
-    tracker.trackEvent({category: 'mycat', action: 'myaction'});
+    tracker.trackEvent({screenName: 'MyScreen', category: 'mycat', action: 'myaction'});
 });
 
 win.add(btn);

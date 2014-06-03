@@ -136,35 +136,37 @@
     NSString *screenName;
     
     ENSURE_SINGLE_ARG(args, NSDictionary);
-    ENSURE_ARG_OR_NIL_FOR_KEY(screenName, args, @"screenName", NSString);
+    ENSURE_ARG_OR_NIL_FOR_KEY(screenName, args, @"screenName", NSString); // required
     
     ENSURE_UI_THREAD_1_ARG(args);
     
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker set:kGAIScreenName value:screenName];
-    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    [tracker send:[[[GAIDictionaryBuilder createAppView] set:screenName forKey:kGAIScreenName] build]];
 }
 
 -(void)trackEvent:(id)args
 {
+    NSString *screenName;
     NSString *category;
     NSString *action;
     NSString *label;
     NSNumber *value;
     
     ENSURE_SINGLE_ARG(args, NSDictionary);
-    ENSURE_ARG_OR_NIL_FOR_KEY(category, args, @"category", NSString);
-    ENSURE_ARG_OR_NIL_FOR_KEY(action, args, @"action", NSString);
+    ENSURE_ARG_OR_NIL_FOR_KEY(screenName, args, @"screenName", NSString); // required
+    ENSURE_ARG_OR_NIL_FOR_KEY(category, args, @"category", NSString); // required
+    ENSURE_ARG_OR_NIL_FOR_KEY(action, args, @"action", NSString); // required
     ENSURE_ARG_OR_NIL_FOR_KEY(label, args, @"label", NSString);
     ENSURE_ARG_OR_NIL_FOR_KEY(value, args, @"value", NSNumber);
     
     ENSURE_UI_THREAD_1_ARG(args);
     
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:category
+    [tracker send:[[[GAIDictionaryBuilder createEventWithCategory:category
                                                           action:action
                                                            label:label
-                                                           value:value] build]];
+                                                           value:value]
+                   set:screenName forKey:kGAIScreenName] build]];
 }
 
 -(void)trackTiming:(id)args

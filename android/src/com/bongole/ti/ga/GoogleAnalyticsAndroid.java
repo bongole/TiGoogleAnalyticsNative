@@ -11,6 +11,8 @@ package com.bongole.ti.ga;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.HashMap;
 
+import android.content.Context;
+import com.google.analytics.tracking.android.*;
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
@@ -18,12 +20,6 @@ import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.kroll.common.TiConfig;
-
-import com.google.analytics.tracking.android.ExceptionReporter;
-import com.google.analytics.tracking.android.GAServiceManager;
-import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.analytics.tracking.android.ServiceManager;
-import com.google.analytics.tracking.android.Tracker;
 
 
 @Kroll.module(name="GoogleAnalyticsAndroid", id="com.bongole.ti.ga")
@@ -53,56 +49,57 @@ public class GoogleAnalyticsAndroid extends KrollModule
 	@Kroll.method
 	public void start(HashMap o)
 	{
+        Context ctx = TiApplication.getInstance().getApplicationContext();
 		KrollDict dict = new KrollDict(o);
 		
-		GoogleAnalytics ga = GoogleAnalytics.getInstance(TiApplication.getInstance().getApplicationContext());
-		
-		if( dict.containsKeyAndNotNull("debug") ){
-			ga.setDebug(dict.getBoolean("debug"));
-		}
+		GoogleAnalytics ga = GoogleAnalytics.getInstance(ctx);
 		
 		Integer period = 20;
 		if( dict.containsKeyAndNotNull("dispatchInterval") ){
 			period = dict.getInt("dispatchInterval");
+            GAServiceManager.getInstance().setLocalDispatchPeriod(period);
 		}
-		
-		GAServiceManager.getInstance().setDispatchPeriod( period );
-		
-		Tracker tracker = ga.getTracker(dict.getString("account"));
-		
-		if( dict.containsKeyAndNotNull("anonymizeIp") ){
-			tracker.setAnonymizeIp(dict.getBoolean("anonymizeIp"));
-		}
-		
-		Double sampleRate = 100.0;
-		if( dict.containsKeyAndNotNull("sampleRate") ){
-			dict.getDouble("sampleRate");
-		}
-		tracker.setSampleRate( sampleRate );
-		
-		ga.setDefaultTracker(tracker);
-		
-		UncaughtExceptionHandler myHandler = new ExceptionReporter(
-			    tracker,                                        // Currently used Tracker.
-			    GAServiceManager.getInstance(),
-			    Thread.getDefaultUncaughtExceptionHandler());     // Current default uncaught exception handler.
 
-		Thread.setDefaultUncaughtExceptionHandler(myHandler); // Make myHandler the new default uncaught exception handler.
+        if( dict.containsKeyAndNotNull("dryRun") ) {
+            if( dict.getBoolean("dryRun") ){
+                ga.setDryRun(true);
+            }
+        }
+
+        if( dict.containsKeyAndNotNull("verbose") ) {
+            if( dict.getBoolean("verbose") ){
+                ga.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
+            }
+        }
+
+		Tracker tracker = ga.getTracker(dict.getString("trackingId"));
+		ga.setDefaultTracker(tracker);
+
+        UncaughtExceptionHandler exceptionHandler = new ExceptionReporter(
+                tracker,
+                GAServiceManager.getInstance(),
+                Thread.getDefaultUncaughtExceptionHandler(), ctx);
+
+        Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
 	}
 	
 	@Kroll.method
-	public void trackView(KrollDict o)
+	public void trackScreen(KrollDict o)
 	{
 		KrollDict dict = new KrollDict(o);
 		GoogleAnalytics ga = GoogleAnalytics.getInstance(TiApplication.getInstance().getApplicationContext());
 		Tracker tracker = ga.getDefaultTracker();
 		
-		String viewName = null;
-		if( dict.containsKeyAndNotNull("viewName") ){
-			viewName = dict.getString("viewName");
+		String screenName = null;
+		if( dict.containsKeyAndNotNull("screenName") ){
+			screenName = dict.getString("screenName");
 		}
-		
-		tracker.trackView(viewName);
+
+        tracker.send(MapBuilder
+            .createAppView()
+            .set(Fields.SCREEN_NAME, screenName)
+            .build()
+        );
 	}
 	
 	@Kroll.method
@@ -111,12 +108,17 @@ public class GoogleAnalyticsAndroid extends KrollModule
 		KrollDict dict = new KrollDict(o);
 		GoogleAnalytics ga = GoogleAnalytics.getInstance(TiApplication.getInstance().getApplicationContext());
 		Tracker tracker = ga.getDefaultTracker();
-		
+
+        String screenName = null;
 		String category = null;
 		String action = null;
 		String label = null;
 		Long value = null;
-		
+
+        if( dict.containsKeyAndNotNull("screenName") ) {
+            screenName = dict.getString("screenName");
+        }
+
 		if( dict.containsKeyAndNotNull("category") ){
 			category = dict.getString("category");
 		}
@@ -133,7 +135,11 @@ public class GoogleAnalyticsAndroid extends KrollModule
 			value = dict.getDouble("value").longValue();
 		}
 		
-		tracker.trackEvent(category, action, label, value);
+		tracker.send(MapBuilder
+                .createEvent(category, action, label, value)
+                .set(Fields.SCREEN_NAME, screenName)
+                .build()
+        );
 	}
 	
 	@Kroll.method
@@ -144,7 +150,7 @@ public class GoogleAnalyticsAndroid extends KrollModule
 		Tracker tracker = ga.getDefaultTracker();
 		
 		String category = null;
-		Long value = null;
+		Long interval = null;
 		String name = null;
 		String label = null;
 		
@@ -160,11 +166,11 @@ public class GoogleAnalyticsAndroid extends KrollModule
 			label = dict.getString("label");
 		}
 		
-		if( dict.containsKeyAndNotNull("value")){
-			value = dict.getDouble("value").longValue();
+		if( dict.containsKeyAndNotNull("interval")){
+			interval = dict.getDouble("interval").longValue();
 		}	
 		
-		tracker.trackTiming(category, value, name, label);
+		tracker.send(MapBuilder.createTiming(category, interval, name, label).build());
 	}
 	
 	@Kroll.method
@@ -172,7 +178,7 @@ public class GoogleAnalyticsAndroid extends KrollModule
 	{
 		GoogleAnalytics ga = GoogleAnalytics.getInstance(TiApplication.getInstance().getApplicationContext());
 		Tracker tracker = ga.getDefaultTracker();
-		tracker.setStartSession(true);
+        tracker.set(Fields.SESSION_CONTROL, "start");
 	}
 	
 	@Kroll.method
@@ -180,7 +186,7 @@ public class GoogleAnalyticsAndroid extends KrollModule
 	{
 		GoogleAnalytics ga = GoogleAnalytics.getInstance(TiApplication.getInstance().getApplicationContext());
 		Tracker tracker = ga.getDefaultTracker();
-		tracker.setStartSession(false);
+        tracker.set(Fields.SESSION_CONTROL, "end");
 	}
 }
 
